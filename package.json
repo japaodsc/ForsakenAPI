@@ -1,0 +1,36 @@
+{
+  "name": "corona-moh-api",
+  "version": "1.0.0",
+  "description": "A server to get covid-19 data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/japaodsc/corona-moh-api.git"
+  },
+  "keywords": [
+    "corona",
+    "covid-19",
+    "api",
+    "server",
+    "nodejs"
+  ],
+  "author": "japaodsc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/japaodsc/corona-moh-api/issues"
+  },
+  "homepage": "https://github.com/japaodsc/corona-moh-api#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "content-type": "^1.0.4",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.6.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "underscore": "^1.10.2"
+  }
+}
