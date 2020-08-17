@@ -95,16 +95,12 @@ async function getNews() {
 }
 getDataByCountry();*/
 
-  async function log() {
+module.exports = async function () {
   let vndata = await getVNData();
   let wdata = await getWData();
   let newsdata = await getNews();
   let cdata = await _under.extend(vndata, wdata, newsdata)
   //console.log(cdata);
-  fs.writeFile("/var/www/html/moh-data.json", JSON.stringify(cdata), () => {console.log("Da write file thanh cong.")})
+  //fs.writeFile("/var/www/html/moh-data.json", JSON.stringify(cdata), () => {console.log("Da write file thanh cong.")})
   return cdata;
   }
-
-module.exports = function (callback) {
-  callback(log());
-}
