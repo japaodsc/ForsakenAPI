@@ -8,6 +8,7 @@ const urln = "https://vnanet.vn/vi/tin-tuc/suc-khoe-7/"
 const _under = require("underscore");
 const https = require('https');
 const { get } = require("request-promise");
+const cron = require('node-cron')
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
   });
@@ -16,15 +17,16 @@ const options = {
   agent: httpsAgent,
 }
 let country = "Vietnam";
-let now = new Date();
-let time = now.toLocaleTimeString();
+
 
 function sleep(ms) {
   return new Promise((resolve) => {
   setTimeout(resolve, ms);
  });
  }
- module.exports = async function () {
+async function getData() {
+  let now = new Date();
+  let time = now.toLocaleTimeString();
   let data = await Promise.all([
     fetch(urlvn, options).then((res1) => res1.text()),
     fetch(urlw, options).then((res2) => res2.text()),
@@ -69,8 +71,19 @@ function sleep(ms) {
     "news": newsdata
   }
   let cdata = await _under.extend(vn, world, news)
-  fs.writeFile("./pages/cdata.json", cdata, () => {console.log("Đã ghi dữ liệu mới - " + time)})
+  return cdata;
   }
+
+async function log(){
+  let cdata = await getData();
+  await fs.writeFile("./resources/cdata.json", JSON.stringify(cdata), () => {console.log("CDATA|| Đã ghi dữ liệu mới - " + cdata.time)})
+}
+ module.exports = function() {
+   cron.schedule('*/20 * * * * *', () => log())
+  }
+
+
+
 /*async function getDataByCountry(){
   return await fetch(urlw, options)
    .then(rep => rep.text())

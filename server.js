@@ -1,15 +1,19 @@
 const express = require('express');
 const port = 14100;
-const server = express();
-const fastify = require('fastify')({ logger: true })
+const fastify = require('fastify')();
 const cdata = require('./modules/getcdata');
 const path = require('path');
-
-fastify.get("/api/moh/data", (req, res) => {
+const cron = require('node-cron');
+cdata();
+fastify.register(require('fastify-favicon'), { path: './resources' })
+fastify.register(require('fastify-static'), {
+    root: path.join(__dirname, 'resources')
+  })
+fastify.get("/api/moh/data", async (req, res) => {
      res
-     .code(200)
      .header('Content-Type', 'application/json; charset=utf-8')
-     .send(__path.join(__dirname, 'pages', 'cdata.json'))
+     .sendFile('cdata.json')
+     console.log("CDATA Request From: " + req.ip)
  });
  fastify.get("/", async (req, res) => {
      res.send("Welcome! This is JaPao's API server. For more infomation, please contact me at https://facebook.com/japeooo. Love <3")
@@ -17,13 +21,11 @@ fastify.get("/api/moh/data", (req, res) => {
 fastify.get('*', function(req, res) {
      res.redirect('/');
  });
- /*server.listen(port, '0.0.0.0', () => {
-     console.log("RESTful API Server by JaPao. Server is now running at " + port)
- });*/
  fastify.listen(port, '0.0.0.0', (err) => {
     if (err) {
       fastify.log.error(err)
       process.exit(1)
     }
-    fastify.log.info(`RESTful API Server by JaPao. Server is now running at ${fastify.server.address().port}`)
+    console.log(`RESTful API Server by JaPao. Server is now running at ${fastify.server.address().port}`)
+
   })
