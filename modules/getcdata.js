@@ -7,6 +7,7 @@ const urlw = "https://www.worldometers.info/coronavirus";
 const urln = "https://vnanet.vn/vi/tin-tuc/suc-khoe-7/"
 const _under = require("underscore");
 const https = require('https');
+const { get } = require("request-promise");
 const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
   });
@@ -14,15 +15,26 @@ const options = {
   method: 'POST',
   agent: httpsAgent,
 }
-
 let country = "Vietnam";
-async function getVNData() {
-  return await fetch(urlvn,options)
-      .then(res => res.text())
-      .then(body => {
-    const $ = cheerio.load(body);    
-    let now = new Date();
-    let time = now.toLocaleTimeString();
+let now = new Date();
+let time = now.toLocaleTimeString();
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+  setTimeout(resolve, ms);
+ });
+ }
+ module.exports = async function () {
+  let data = await Promise.all([
+    fetch(urlvn, options).then((res1) => res1.text()),
+    fetch(urlw, options).then((res2) => res2.text()),
+    fetch(urln, options).then((res3) => res3.text())
+  ])
+
+    const $ = cheerio.load(data[0]);
+    const $$ = cheerio.load(data[1]);
+    const $$$ = cheerio.load(data[2]);
+    //VIETNAM DATA//
     let vncases = $('span.font24').eq(0).text()
     let vndeaths = $('span.font24').eq(3).text()
     let vnrecovering = $('span.font24').eq(1).text()
@@ -36,42 +48,29 @@ async function getVNData() {
         "recovering": vnrecovering,
         "recovered": vnrecovered
        }
+
       }
-      return vn;
-    });
-  }
-async function getWData() {
-  return await fetch(urlw,options)
-      .then(res => res.text())
-      .then(body => {
-        const $ = cheerio.load(body);
-        let wcases = $('div.maincounter-number').eq(0).children().text();
-        let wdeaths = $('div.maincounter-number').eq(1).children().text();
-        let wrecovering = $('div.number-table-main').eq(0).text();
-        let wrecovered = $('div.maincounter-number').eq(2).children().text();
-        let world = {
-        "world": {
-          "cases": wcases.replace(/,/g,""),  
-          "deaths": wdeaths.replace(/,/g,""),
-          "recovering": wrecovering.replace(/,/g,""),
-          "recovered": wrecovered.replace(/,/g,"")
-        }
-       }
-    return world;
-  })
-}  
-async function getNews() {
-  return await fetch(urln,options)
-      .then(res => res.text())
-      .then(body => {
-         const $ = cheerio.load(body);
-         let newsdata = $("div.grp-panel > a").eq(0).text();
-         let news = {
-          "news": newsdata
-        }
-        return news;
-      });
+    //WORLD DATA//
+    let wcases = $$('div.maincounter-number').eq(0).children().text();
+    let wdeaths = $$('div.maincounter-number').eq(1).children().text();
+    let wrecovering = $$('div.number-table-main').eq(0).text();
+    let wrecovered = $$('div.maincounter-number').eq(2).children().text();
+    let world = {
+    "world": {
+      "cases": wcases.replace(/,/g,""),  
+      "deaths": wdeaths.replace(/,/g,""),
+      "recovering": wrecovering.replace(/,/g,""),
+      "recovered": wrecovered.replace(/,/g,"")
     }
+   }
+   //NEWS DATA//
+   let newsdata = $$$("div.grp-panel > a").eq(0).text();
+   let news = {
+    "news": newsdata
+  }
+  let cdata = _under.extend(vn, world, news)
+  return cdata;
+  }
 /*async function getDataByCountry(){
   return await fetch(urlw, options)
    .then(rep => rep.text())
@@ -94,13 +93,3 @@ async function getNews() {
 })
 }
 getDataByCountry();*/
-
-module.exports = async function () {
-  let vndata = await getVNData();
-  let wdata = await getWData();
-  let newsdata = await getNews();
-  let cdata = await _under.extend(vndata, wdata, newsdata)
-  //console.log(cdata);
-  //fs.writeFile("/var/www/html/moh-data.json", JSON.stringify(cdata), () => {console.log("Da write file thanh cong.")})
-  return cdata;
-  }
