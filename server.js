@@ -10,10 +10,12 @@ fastify.register(require('fastify-static'), {
     root: path.join(__dirname, 'resources')
   })
 fastify.get("/api/moh/data", async (req, res) => {
+     let now = new Date();
+     let time = now.toLocaleTimeString();
      res
      .header('Content-Type', 'application/json; charset=utf-8')
      .sendFile('cdata.json')
-     console.log("CDATA Request From: " + req.ip)
+     console.log("CDATA Request From: " + req.ip + " Time: " + time)
  });
  fastify.get("/", async (req, res) => {
      res.send("Welcome! This is JaPao's API server. For more infomation, please contact me at https://facebook.com/japeooo. Love <3")

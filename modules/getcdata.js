@@ -79,7 +79,7 @@ async function log(){
   await fs.writeFile("./resources/cdata.json", JSON.stringify(cdata), () => {console.log("CDATA|| Đã ghi dữ liệu mới - " + cdata.time)})
 }
  module.exports = function() {
-   cron.schedule('*/20 * * * * *', () => log())
+   cron.schedule('*/1 * * * *', () => log())
   }
 
 
