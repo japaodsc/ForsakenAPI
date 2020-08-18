@@ -68,8 +68,8 @@ function sleep(ms) {
    let news = {
     "news": newsdata
   }
-  let cdata = _under.extend(vn, world, news)
-  return cdata;
+  let cdata = await _under.extend(vn, world, news)
+  fs.writeFile("./pages/cdata.json", cdata, () => {console.log("Đã ghi dữ liệu mới - " + time)})
   }
 /*async function getDataByCountry(){
   return await fetch(urlw, options)

@@ -6,10 +6,7 @@ const cdata = require('./modules/getcdata');
 const path = require('path');
 
 fastify.get("/api/moh/data", (req, res) => {
-    cdata()
-    .then(cdata =>{
-        res.send(cdata)
-    })
+        res.sendFile('./pages/cdata.json')
  });
  fastify.get("/", async (req, res) => {
      res.send("Welcome! This is JaPao's API server. For more infomation, please contact me at https://facebook.com/japeooo. Love <3")
