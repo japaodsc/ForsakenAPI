@@ -17,12 +17,9 @@ fastify.get("/api/moh/data", async (req, res) => {
      .sendFile('cdata.json')
      console.log("CDATA Request From: " + req.ip + " Time: " + time)
  });
- fastify.get("/", async (req, res) => {
+ fastify.get("/", (req, res) => {
      res.send("Welcome! This is JaPao's API server. For more infomation, please contact me at https://facebook.com/japeooo. Love <3")
  })
-fastify.get('*', function(req, res) {
-     res.redirect('/');
- });
  fastify.listen(port, '0.0.0.0', (err) => {
     if (err) {
       fastify.log.error(err)
