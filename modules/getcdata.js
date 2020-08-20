@@ -45,10 +45,10 @@ async function getData() {
     let vn = {
       "time" : time,
        "vietnam": {
-        "cases": vncases,  
-        "deaths": vndeaths,
-        "recovering": vnrecovering,
-        "recovered": vnrecovered
+        "cases": vncases.replace(/\./g,""),  
+        "deaths": vndeaths.replace(/\./g,""),
+        "recovering": vnrecovering.replace(/\./g,""),
+        "recovered": vnrecovered.replace(/\./g,"")
        }
 
       }
