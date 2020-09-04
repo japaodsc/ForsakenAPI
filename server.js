@@ -1,15 +1,22 @@
 const express = require('express');
-const port = 14100;
-const fastify = require('fastify')();
-const cdata = require('./modules/getcdata');
+const port = 2096;
+const fs = require('fs')
 const path = require('path');
+const fastify = require('fastify')({
+  https: {
+    key: fs.readFileSync(path.join(__dirname, 'resources', 'privkey.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'resources', 'fullchain.pem'))
+  },
+});
+const cdata = require('./modules/getcdata');
 const cron = require('node-cron');
 cdata();
 fastify.register(require('fastify-favicon'), { path: './resources' })
 fastify.register(require('fastify-static'), {
     root: path.join(__dirname, 'resources')
   })
-fastify.get("/api/moh/data", async (req, res) => {
+  
+fastify.get("/moh/data", async (req, res) => {
      let now = new Date();
      let time = now.toLocaleTimeString();
      res
