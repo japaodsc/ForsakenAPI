@@ -28,14 +28,12 @@ module.exports = async function() {
   let now = new Date();
   let time = now.toLocaleTimeString();
   let data = await Promise.all([
-    fetch(urlvn, options).then((res1) => res1.text()),
-    fetch(urlw, options).then((res2) => res2.text()),
-    fetch(urln, options).then((res3) => res3.text())
+    fetch(urlvn, options).then((resmoh) => resmoh.text()),
+    fetch(urln, options).then((resttx) => resttx.text())
   ])
 
     const $ = cheerio.load(data[0]);
     const $$ = cheerio.load(data[1]);
-    const $$$ = cheerio.load(data[2]);
     //VIETNAM DATA//
     let vncases = $('span.font24').eq(0).text()
     let vndeaths = $('span.font24').eq(3).text()
@@ -53,10 +51,10 @@ module.exports = async function() {
 
       }
     //WORLD DATA//
-    let wcases = $$('div.maincounter-number').eq(0).children().text();
-    let wdeaths = $$('div.maincounter-number').eq(1).children().text();
-    let wrecovering = $$('div.number-table-main').eq(0).text();
-    let wrecovered = $$('div.maincounter-number').eq(2).children().text();
+    let wcases = $('span.font24').eq(4).text()
+    let wdeaths = $('span.font24').eq(7).text()
+    let wrecovering = $('span.font24').eq(5).text()
+    let wrecovered = $('span.font24').eq(6).text()
     let world = {
     "world": {
       "cases": wcases.replace(/,/g,""),  
@@ -66,7 +64,7 @@ module.exports = async function() {
     }
    }
    //NEWS DATA//
-   let newsdata = $$$("div.grp-panel > a").eq(0).text();
+   let newsdata = $$("div.grp-panel > a").eq(0).text();
    let news = {
     "news": newsdata
   }
