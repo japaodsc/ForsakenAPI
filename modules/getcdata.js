@@ -24,7 +24,7 @@ function sleep(ms) {
   setTimeout(resolve, ms);
  });
  }
-async function getData() {
+module.exports = async function() {
   let now = new Date();
   let time = now.toLocaleTimeString();
   let data = await Promise.all([
@@ -74,14 +74,14 @@ async function getData() {
   return cdata;
   }
 
-async function log(){
+/*async function log(){
   let cdata = await getData();
   await fs.writeFile("./resources/cdata.json", JSON.stringify(cdata), () => {console.log("CDATA|| Đã ghi dữ liệu mới - " + cdata.time)})
 }
  module.exports = function() {
-   cron.schedule('*/1 * * * *', () => log())
+   cron.schedule('1 * * * *', () => log())
   }
-
+*/
 
 
 /*async function getDataByCountry(){
