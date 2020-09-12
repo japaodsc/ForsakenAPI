@@ -57,10 +57,10 @@ module.exports = async function() {
     let wrecovered = $('span.font24').eq(6).text()
     let world = {
     "world": {
-      "cases": wcases.replace(/,/g,""),  
-      "deaths": wdeaths.replace(/,/g,""),
-      "recovering": wrecovering.replace(/,/g,""),
-      "recovered": wrecovered.replace(/,/g,"")
+      "cases": wcases.replace(/\./g,""),  
+      "deaths": wdeaths.replace(/\./g,""),
+      "recovering": wrecovering.replace(/\./g,""),
+      "recovered": wrecovered.replace(/\./g,"")
     }
    }
    //NEWS DATA//
