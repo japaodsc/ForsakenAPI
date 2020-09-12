@@ -19,11 +19,15 @@ fastify.register(require('fastify-static'), {
 cdata();
 
 fastify.get("/moh/data", async (req, res) => {
-     let now = new Date();
+    /* let now = new Date();
      let time = now.toLocaleTimeString();
      res
      .header('Content-Type', 'application/json; charset=utf-8')
-     .sendFile('cdata.json')
+     .sendFile('cdata.json')*/
+     cdata()
+     .then(cdata =>{
+         res.send(cdata)
+     })
      console.log("CDATA Request From: " + req.ip + " Time: " + time)
  });
  fastify.get("/", (req, res) => {
