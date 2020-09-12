@@ -19,9 +19,9 @@ fastify.register(require('fastify-static'), {
 cdata();
 
 fastify.get("/moh/data", async (req, res) => {
-    /* let now = new Date();
+     let now = new Date();
      let time = now.toLocaleTimeString();
-     res
+     /*res
      .header('Content-Type', 'application/json; charset=utf-8')
      .sendFile('cdata.json')*/
      cdata()
