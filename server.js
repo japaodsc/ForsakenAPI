@@ -34,7 +34,7 @@ fastify.get("/moh/data", async (req, res) => {
  })
  //sao no deo chiu commit
  fastify.get("/chanh", (req, res) => {
-  res.send("Địt mẹ thằng Long")
+  res.send("Miss you so much.......Sorry :((((((")
 })
 fastify.setNotFoundHandler((req, res) => {
   res.redirect("/")
