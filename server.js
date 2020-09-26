@@ -14,9 +14,8 @@ const fastify = require('fastify')({
 });
 fastify.register(require('fastify-favicon'), { path: './resources' })
 fastify.register(require('fastify-static'), {
-    root: path.join(__dirname, 'resources')
-  })
-cdata();
+  root: path.join(__dirname, 'pages')
+})
 
 fastify.get("/moh/data", async (req, res) => {
      let now = new Date();
@@ -31,7 +30,7 @@ fastify.get("/moh/data", async (req, res) => {
      console.log("CDATA Request From: " + req.ip + " Time: " + time)
  });
  fastify.get("/", (req, res) => {
-     res.sendFile(index.html)
+     res.sendFile('index.html')
  })
  //sao no deo chiu commit
  fastify.get("/chanh", (req, res) => {
