@@ -31,8 +31,9 @@ fastify.get("/moh/data", async (req, res) => {
      console.log("CDATA Request From: " + req.ip + " Time: " + time)
  });
  fastify.get("/", (req, res) => {
-     res.send("Welcome! This is JaPao's API server. For more infomation, please contact me at https://facebook.com/japeooo. Love <3")
+     res.sendFile(index.html)
  })
+ //sao no deo chiu commit
  fastify.get("/chanh", (req, res) => {
   res.send("Địt mẹ thằng Long")
 })
