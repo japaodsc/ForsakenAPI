@@ -24,6 +24,7 @@ function sleep(ms) {
   setTimeout(resolve, ms);
  });
  }
+// debug async function lol() {
 module.exports= async function() {
   let now = new Date();
   let time = now.toLocaleTimeString();
@@ -37,7 +38,9 @@ module.exports= async function() {
     let bidenElect = $('div.party-label>div.info>div.count').eq(0).text()
     let trumpElect = $('div.party-label>div.info>div.count').eq(1).text()
     let bidenVotes =$('div.bar-wrap.has-label-upper.has-label-lower>div.bar-label.is-lower>div.label.label-left>div.popular-vote.dem>span.count').text()
+    let bidenPercent =$('div.bar-wrap.has-label-upper.has-label-lower>div.bar-label.is-lower>div.label.label-left>div.popular-vote.dem>span.percent').text()
     let trumpVotes =$('div.bar-wrap.has-label-upper.has-label-lower>div.bar-label.is-lower>div.label.label-right>div.popular-vote.rep>span.count').text()
+    let trumpPercent =$('div.bar-wrap.has-label-upper.has-label-lower>div.bar-label.is-lower>div.label.label-right>div.popular-vote.rep>span.percent').text()
 
     let election = {
       "time" : time,
@@ -45,10 +48,13 @@ module.exports= async function() {
         "bidenElect": bidenElect,  
         "trumpElect": trumpElect,
         "bidenVotes": bidenVotes,
-        "trumpVotes": trumpVotes
+        "bidenPercent": bidenPercent,
+        "trumpVotes": trumpVotes,
+        "trumpPercent": trumpPercent,
        }
-
       }
+      
   return election;
   
     }
+// debug lol();
