@@ -3,6 +3,7 @@ const port = 2096;
 const fs = require('fs')
 const path = require('path');
 const cdata = require('./modules/getcdata');
+const election = require('./modules/election');
 const fastify = require('fastify')({
   logger: false,
   http2: true,
@@ -20,21 +21,27 @@ fastify.register(require('fastify-static'), {
 fastify.get("/moh/data", async (req, res) => {
      let now = new Date();
      let time = now.toLocaleTimeString();
-     /*res
-     .header('Content-Type', 'application/json; charset=utf-8')
-     .sendFile('cdata.json')*/
      cdata()
      .then(cdata =>{
          res.send(cdata)
      })
      console.log("CDATA Request From: " + req.ip + " Time: " + time)
  });
+ fastify.get("/election/data", async (req, res) => {
+  let now = new Date();
+  let time = now.toLocaleTimeString();
+  election()
+  .then(election =>{
+      res.send(election)
+  })
+  console.log("2020 USA ELECTION Request From: " + req.ip + " Time: " + time)
+});
  fastify.get("/", (req, res) => {
      res.sendFile('index.html')
  })
  //sao no deo chiu commit
  fastify.get("/chanh", (req, res) => {
-  res.send("Miss you so much.......Sorry :((((((")
+  res.send("iu iu <3")
 })
 fastify.setNotFoundHandler((req, res) => {
   res.redirect("/")
