@@ -70,7 +70,6 @@ module.exports = async function() {
     "news": newsdata
   }
   let cdata = await _under.extend(vn, world, news)
-  console.log(cdata)
   return cdata;
 }
 //log()

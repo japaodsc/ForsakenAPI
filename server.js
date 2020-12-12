@@ -21,11 +21,12 @@ fastify.register(require('fastify-static'), {
 fastify.get("/moh/data", async (req, res) => {
      let now = new Date();
      let time = now.toLocaleTimeString();
+     let date = now.toLocaleDateString();
      cdata()
      .then(cdata =>{
          res.send(cdata)
      })
-     console.log("CDATA Request From: " + req.ip + " Time: " + time)
+     console.log("CDATA Request From: " + req.headers['host'] + " - UserAgents: " + req.headers['user-agent'] + " -  Time: " + time + " " + date)
  });
  fastify.get("/election/data", async (req, res) => {
   let now = new Date();
@@ -52,6 +53,6 @@ fastify.setNotFoundHandler((req, res) => {
       console.log(err)
       process.exit(1)
     }
-    console.log(`RESTful API Server by JaPao. Server is now running at ${fastify.server.address().port}`)
+    console.log(`JaPao API Endpoint is now running at port ${fastify.server.address().port}`)
 
   })
