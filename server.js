@@ -10,7 +10,7 @@ const fastify = require('fastify')({
   https: {
     allowHTTP1: true,
     key: fs.readFileSync(path.join(__dirname, 'resources', 'privkey.pem')),
-    cert: fs.readFileSync(path.join(__dirname, 'resources', 'fullchain.pem'))
+    cert: fs.readFileSync(path.join(__dirname, 'resources', 'cert.pem'))
   },
 });
 fastify.register(require('fastify-favicon'), { path: './resources' })
