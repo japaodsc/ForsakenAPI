@@ -66,7 +66,6 @@ module.exports = async function() {
    }
    //NEWS DATA//
    let newsdata = $$("div.portlet-body > div > a > h2.mt-3").text();
-   console.log(newsdata)
    let news = {
     "news": newsdata
   }
