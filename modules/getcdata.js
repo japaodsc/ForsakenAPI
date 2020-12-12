@@ -4,7 +4,7 @@ const cheerio = require("cheerio");
 const fs = require("fs");
 const urlvn = "https://ncov.moh.gov.vn";
 const urlw = "https://www.worldometers.info/coronavirus";
-const urln = "https://vnanet.vn/vi/tin-tuc/suc-khoe-7/"
+const urln = "https://ncov.moh.gov.vn/vi/web/guest/tin-tuc"
 const _under = require("underscore");
 const https = require('https');
 const { get } = require("request-promise");
@@ -24,6 +24,7 @@ function sleep(ms) {
   setTimeout(resolve, ms);
  });
  }
+//async function log(){
 module.exports = async function() {
   let now = new Date();
   let time = now.toLocaleTimeString();
@@ -64,13 +65,16 @@ module.exports = async function() {
     }
    }
    //NEWS DATA//
-   let newsdata = $$("div.grp-panel > a").eq(0).text();
+   let newsdata = $$("div.portlet-body > div > a > h2.mt-3").text();
+   console.log(newsdata)
    let news = {
     "news": newsdata
   }
   let cdata = await _under.extend(vn, world, news)
+  console.log(cdata)
   return cdata;
-  }
+}
+//log()
 
 /*async function log(){
   let cdata = await getData();
